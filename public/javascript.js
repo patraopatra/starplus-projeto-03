@@ -4,6 +4,7 @@ let resposta;
 var API_KEY = "k_ixjet3x4"; // API IMDB - 1000 acessos   k_wcarsm20
 var API_URL = 'https://imdb-api.com/API/SearchTitle/' + API_KEY + '/';
 var temconta = new Boolean(true);
+var urlAPI = 'http://localhost:3000';
 
 document.querySelector("#confirmasenha").style.display = "none";
 document.querySelector("#labelconfirma").style.display = "none";
@@ -28,7 +29,7 @@ function erroValidacao() {
 
 function pegarToken() {
   if (deixaLogar == true) {
-    fetch('https://reqres.in/api/login', {
+    fetch(urlAPI + '/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -50,9 +51,27 @@ function pegarToken() {
   }
 }
 
-function erroEscrita() {
+function criarLogin() {
+    fetch(urlAPI + '/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: document.querySelector('#cemail').value,
+        password: document.querySelector('#cpassword').value,
+        confirmpassword: document.querySelector('#confirmasenha').value
+      })
+    }).then(res => {
+      return res.json()
+    })
+      .catch(error => console.log('ERROR'))
+}
+
+function erroEscrita() {   // FAZER comparar senhas, respostas dos erros FRONT-END, tirar TODOS os console.log
   if (document.querySelector("#cemail").value.length < 3 ||
-    document.querySelector("#cpassword").value.length < 3) {
+      document.querySelector("#cpassword").value.length < 3 ||
+      document.querySelector("#cpassword").value.length < 3) {
     document.querySelector("#erroEscrita").style.display = "block";
     deixaLogar = false;
   }
@@ -62,10 +81,25 @@ function erroEscrita() {
   }
 }
 
-function validar() {
+function validarLogin() {
   erroEscrita();
   pegarToken();
   setTimeout(erroValidacao, 1200); // executar em 1200ms
+}
+
+function validarRegistro() {
+  erroEscrita();
+  criarLogin();
+  setTimeout(erroValidacao, 1200); // executar em 1200ms
+}
+
+function validar(){
+  if(temconta == true){
+    validarLogin();
+  }
+  else{
+    validarRegistro();
+  }
 }
 
 function jaLogado() {
@@ -114,10 +148,10 @@ function pesquisar(){
 
 function naoTemLogin(){
   temconta = !temconta
-  criarLogin()
+  toggleLoginRegister()
 }
 
-function criarLogin(){
+function toggleLoginRegister(){
   var a1 = document.querySelector('.Login')
   var a2 = document.querySelector('#naoTemConta')
   if(temconta == false){

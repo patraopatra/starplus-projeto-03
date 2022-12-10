@@ -155,3 +155,10 @@ mongoose.connect(
     app.listen(3000);
   })
   .catch((err) => console.log(err));
+
+/*Gerar um token e criptografar
+  Criar um admin no banco com o token criptografado
+  Criar uma função (ex: ehAdmin()) com esse token setado fixamente na função
+  Na função, puxa o email e compara com o do admin
+  Se igual, realiza a comparação dos tokens como serão iguais, permite o acesso de admin 
+*/
