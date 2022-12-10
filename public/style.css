@@ -1,0 +1,386 @@
+body {
+  margin: 0 auto;
+  background-color: #050a10;
+}
+
+.wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  height: 100vh;
+  background-image: url("bg2150.jpg");
+  background-size: cover;
+  position: relative;
+}
+
+.wrapper #Pesquisa {
+  top: 10%;
+  left: 41.5%;
+}
+
+.displayFilmes{
+  margin-top: -10%;
+  position: absolute;
+}
+
+@font-face {
+  font-family: Avenir;
+  src: url("AvenirLTStd-Roman.otf");
+}
+
+@media only screen and (max-width: 1400px) {
+  .wrapper{
+    background-image: url("bg1400.jpg");
+  }
+
+  .wrapper #logo {
+    top: 45%;
+    left: 40%;
+  }
+
+  .wrapper #Pesquisa {
+    top: 10%;
+    left: 35%;
+  }
+
+  .wrapper h1 {
+    top: 53%;
+    left: 10%;
+    right: 10%;
+  }
+
+  .wrapper .botaoAssine {
+    max-width: 500px;
+    width: 100%;
+    top: 65%;
+    left: 17%;
+    right: 20%;
+  }
+
+  .displayFilmes{
+    margin-top: -20%;
+    position: absolute;
+  }
+  
+}
+
+@media only screen and (max-width: 750px) {
+  .wrapper{
+    background-image: url("bg750.jpg");
+  }
+
+  .wrapper #logo {
+    top: 35%;
+    left: 30%;
+  }
+
+  .wrapper #Pesquisa {
+    top: 10%;
+    left: 13%;
+  }
+
+  .wrapper h1 {
+    top: 45%;
+    left: 12%;
+    right: 12%;
+  }
+
+  .wrapper .botaoAssine {
+    max-width: 300px;
+    width: 100%;
+    top: 67%;
+    left: 12%;
+  }
+
+  .wrapper .seta {
+    top: 85%;
+    left: 44%;
+  }
+
+  .displayFilmes{
+    margin-top: -80%;
+    position: absolute;
+  }
+}
+
+.botaoEntrar {
+  margin: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  max-width: none;
+  height: 50px;
+  top: 16px;
+  right: 40px;
+  background-color: #4e4a59;
+  border: 0;
+  color: white;
+  font-family: Avenir, sans-serif;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.Login {
+  font-family: Avenir, sans-serif;
+  background: #6421ff;
+  text-shadow: 1px 1px 1px #323232;
+  text-align: center;
+  padding: 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px 0 rgb(170, 170, 170);
+  width: 96.8%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.Login:active {
+  transform: translateY(4px);
+  box-shadow: 0 5px rgb(240, 240, 240);
+}
+
+#logo {
+  width: 180px;
+  height: 55px;
+  top: 61.6%;
+  left: 45.3%;
+  position: absolute;
+}
+
+h1 {
+  font-family: Avenir, sans-serif;
+  font-size: 28px;
+  color: white;
+  top: 69.6%;
+  left: 36.5%;
+  position: absolute;
+  text-align: center;
+  letter-spacing: normal;
+  font-weight: bold;
+}
+
+.botaoAssine {
+  cursor: pointer;
+  border-radius: 4px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  background-color: #6421ff;
+  color: white;
+  border: 0;
+  height: 68px;
+  max-width: 700px;
+  font-family: Avenir, sans-serif;
+  font-size: 18px;
+  line-height: 18px;
+  width: 100%;
+  top: 78.5%;
+  left: 32%;
+}
+
+.seta {
+  background-color: transparent;
+  border: 0;
+  position: absolute;
+  top: 93%;
+  left: 49%;
+}
+
+.modalAdd {
+  position: fixed;
+  font-family: Avenir, sans-serif;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999;
+  opacity: 0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+  display: block;
+}
+
+.modalAdd:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#telaLogin {
+  width: 300px;
+  height: auto;
+  position: relative;
+  margin: 10% auto;
+  padding: 15px;
+  background: rgb(240, 240, 240);
+  border-radius: 4px;
+
+}
+
+.fechar {
+  background: #ff4545;
+  color: #8d0000;
+  line-height: 25px;
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  text-align: center;
+  width: 24px;
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -moz-box-shadow: 1px 1px 3px #000;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.entradaLogin {
+  font-family: Avenir, sans-serif;
+  display: block;
+  width: 90%;
+  border-bottom: 2px solid #323232;
+  padding: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  border: ridge;
+  border-color: black;
+  border-width: 1px;
+}
+
+.erro {
+  display: none;
+  color: red;
+}
+
+#Pesquisa {
+  display: none;
+  align-items: center;
+  position: absolute;
+  border-radius: 3px;
+  width: 300px;
+  height: 32px;
+  background-color: #4e4a59;
+}
+
+#textoPesquisa {
+  font-family: Avenir, sans-serif;
+  background-color: transparent;
+  padding-left: 5px;
+  font-size: 18px;
+  border: none;
+  height: 30px;
+  width: 250px;
+}
+
+#botaoPesquisa {
+  cursor: pointer;
+  display: block;
+  height: 32px;
+  width: 32px;
+  padding-right: 5px;
+  float: right;
+  background: transparent;
+  align-items: center;
+}
+
+#botaoPesquisa img {
+  margin: 4px;
+  height: 24px;
+  width: 24px;
+  float: right;
+  align-self: center;
+}
+
+.container{
+  display: inline-block;
+}
+
+.caixaFilme {
+  font-family: Avenir, sans-serif;
+  align-content: center;
+  justify-content: center;
+  width: 160px;
+  height: auto;
+  background-color: #4e4a59;
+  border-radius: 5px;
+  margin: 20px;    
+}
+
+.Poster {
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  display: block;
+  width: 160px;
+  height: 200px;
+}
+
+#Titulo {
+  color: #FFFFFF;
+  margin-top: 5px;
+  width: auto;
+  height: auto;
+  position:relative;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#Descricao {
+  color: #FFFFFF;
+  margin-top: 5px;
+  width: auto;
+  height: auto;
+  position:relative;
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 10px;
+}
+span{
+  padding: 0 5px 0 5px;
+}
+
+#naoTemConta{
+  position: relative;
+  font-size: 12px;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  color: #6421ff;
+}

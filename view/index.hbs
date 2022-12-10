@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Saiba mais sobre o Star+</title>
+</head>
+
+<body onload="jaLogado()">
+  <div class="wrapper">
+    <div id="Pesquisa">
+      <input type="text" placeholder="Pesquisar" id="textoPesquisa">
+      <div id="botaoPesquisa">
+        <img src="searchicon.png" alt="Pesquisar">
+      </div>
+    </div>
+    <a href="#abrirLogin">
+      <button class="botaoEntrar">ENTRAR</button>
+    </a>
+    <img src="logo.svg" alt="Logo Star+" id="logo">
+    <h1>Séries, filmes e esportes que você adora.</h1>
+    <button class="botaoAssine">ESCOLHA SEU PLANO</button>
+    <button type="button" class="seta"><img src="seta.png"></button>
+  </div>
+  <div class="displayFilmes"></div>
+</body>
+
+<div id="abrirLogin" class="modalAdd">
+  <div id="telaLogin">
+    <a href="#fechar" title="Fechar" class="fechar">X</a>
+    <div>
+      <p id="naoTemConta">Não tem um conta? Registre-se</p>
+    </div>
+    <form id="formulario" action="">
+      <label for="nome">Usuário:</label>
+      <input class="entradaLogin" type="text" id="cemail"
+        placeholder="Digite o email" autocomplete="off" />
+      <label for="descricao">Senha:</label>
+      <input class="entradaLogin" type="password" id="cpassword"
+        placeholder="Digite a senha" autocomplete="off" />
+      <label for="descricao" id="labelconfirma">Confirme a senha:</label>
+      <input class="entradaLogin" id="confirmasenha" value="cityslicka" type="password" id="cconfirmpassword"
+        placeholder="Confirme a senha" autocomplete="off" />
+      <div class="Login">
+        <p>ENTRAR</p>
+      </div>
+      <div class="erro" id="erroEscrita">
+        <p>O usuário e senha devem possuir pelo menos 3 caracteres.</p>
+      </div>
+      <div class="erro" id="erroValidacao">
+        <p>Usuário e/ou senha inválido.</p>
+      </div>
+    </form>
+  </div>
+</div>
+
+</html>
+<script type="text/javascript" src="javascript.js"></script>
