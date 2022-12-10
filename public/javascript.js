@@ -5,6 +5,9 @@ var API_KEY = "k_ixjet3x4"; // API IMDB - 1000 acessos   k_wcarsm20
 var API_URL = 'https://imdb-api.com/API/SearchTitle/' + API_KEY + '/';
 var temconta = new Boolean(true);
 var urlAPI = 'http://localhost:3000';
+let msgErro;
+let idAdm = '63948344b0a0ede1d0d73a29';
+let emailAdm = 'admin@admin.com';
 
 document.querySelector("#confirmasenha").style.display = "none";
 document.querySelector("#labelconfirma").style.display = "none";
@@ -14,6 +17,8 @@ function voltar() {
 }
 
 function erroValidacao() {
+  erro = document.querySelector("#erroValidacao");
+  erro.innerHTML = `<p>${msgErro}</p>`
   if (validou == true) {
     document.querySelector("#erroValidacao").style.display = "none"; // some a mensagem de erro
     document.querySelector(".botaoEntrar").style.display = "none"; // some o botão de entrar
@@ -29,6 +34,7 @@ function erroValidacao() {
 
 function pegarToken() {
   if (deixaLogar == true) {
+    // Login
     fetch(urlAPI + '/auth/login', {
       method: 'POST',
       headers: {
@@ -43,10 +49,33 @@ function pegarToken() {
     })
       .then(data => {
         localStorage.setItem("token", data.token);
+
         if (localStorage.getItem("token") != "undefined") {
-          validou = true;
+          //validou = true;
+          validou = false;
         }
+
+        msgErro = data.msg
       })
+      .catch(error => console.log('ERROR'))
+  }
+
+  //verificar se é adm
+  if (document.querySelector('#cemail').value == emailAdm) {
+    fetch(urlAPI + `/user/${idAdm}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
+      },
+    }).then(res => {
+      ehAdm = true
+      return res.json()
+    })
+    .then(data => {
+            ehAdm = false
+            msgErro = data.msg
+    })
       .catch(error => console.log('ERROR'))
   }
 }
@@ -64,6 +93,10 @@ function criarLogin() {
       })
     }).then(res => {
       return res.json()
+    })
+    .then(data => {
+      msgErro = data.msg
+      console.log(msgErro)
     })
       .catch(error => console.log('ERROR'))
 }
@@ -84,13 +117,13 @@ function erroEscrita() {   // FAZER comparar senhas, respostas dos erros FRONT-E
 function validarLogin() {
   erroEscrita();
   pegarToken();
-  setTimeout(erroValidacao, 1200); // executar em 1200ms
+  setTimeout(erroValidacao, 500); // executar em 500ms
 }
 
 function validarRegistro() {
   erroEscrita();
   criarLogin();
-  setTimeout(erroValidacao, 1200); // executar em 1200ms
+  setTimeout(erroValidacao, 500); // executar em 500ms
 }
 
 function validar(){

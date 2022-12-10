@@ -1,12 +1,12 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-let http = require('http'),
-    path = require('path')
+let dotenv = require("dotenv").config();
+let express = require("express");
+let mongoose = require("mongoose");
+let bcrypt = require("bcrypt");
+let jwt = require("jsonwebtoken");
+let http = require('http');
+let path = require('path');
 
-const app = express();
+let app = express();
 
 app.set('views', path.join(__dirname, 'view'));
 app.set('view engine', 'hbs');
@@ -102,6 +102,7 @@ app.post("/auth/register", async (req, res) => {
 
 // Login
 app.post("/auth/login", async (req, res) => {
+  //const { email, password} = req.body;
   const { email, password} = req.body;
 
   // validações
@@ -162,3 +163,4 @@ mongoose.connect(
   Na função, puxa o email e compara com o do admin
   Se igual, realiza a comparação dos tokens como serão iguais, permite o acesso de admin 
 */
+
