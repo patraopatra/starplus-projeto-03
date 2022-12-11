@@ -172,11 +172,16 @@ body {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 10px;
+  text-decoration: none;
+}
+
+a{
+  text-decoration: none;
 }
 
 #botaoResenha:active {
   transform: translateY(4px);
-  box-shadow: 0 5px rgba(58, 31, 121, 0.7);
+  box-shadow: 0 5px rgba(50, 31, 121, 0);
 }
 
 .divBotao {
