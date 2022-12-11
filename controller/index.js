@@ -8,16 +8,16 @@ let path = require('path');
 
 let app = express();
 
-app.set('views', path.join(__dirname, 'view'));
+app.set('views', path.join(__dirname, '../view'));
 app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({extended: false}));
 
 mongoose.set('strictQuery', true); // contornar aviso no terminal
 
 // models
-const User = require("./model/User");
-const Publicacao = require("./model/Publicacao");
+const User = require("../model/User");
+const Publicacao = require("../model/Publicacao");
 
 // Configurar resposta JSON
 app.use(express.json());
@@ -181,7 +181,7 @@ app.get("/post/:title", async (req, res) => {
   const titleq = req.params.title;
 
   // checa se user existe
-  const publicacao = await Publicacao.find({title: titleq});
+  const publicacao = await Publicacao.find({title: {$regex:titleq, $options:'i'}});   // procurar relacionados e case insensitive
 
   if (!publicacao) {
     return res.status(404).json({ msg: "Publicação não existe" });
