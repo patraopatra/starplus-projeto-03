@@ -12,6 +12,8 @@ let emailAdm = 'admin@admin.com';
 document.querySelector("#confirmasenha").style.display = "none";
 document.querySelector("#labelconfirma").style.display = "none";
 document.querySelector("#botaoResenha").style.display = "none";
+document.querySelector("#PesquisaResenha").style.display = "none";
+document.querySelector("#PesquisaFilmes").style.display = "none";
 
 function voltar() {
   window.history.back();
@@ -25,7 +27,8 @@ function erroValidacao() {
     document.querySelector(".botaoEntrar").style.display = "none"; // some o botão de entrar
     document.querySelector(".botaoAssine").style.display = "none"; // some o botão de assine
     document.querySelector(".seta").style.display = "none"; // some a seta
-    document.querySelector("#Pesquisa").style.display = "inline-block" // aparece a pesquisa
+    document.querySelector("#PesquisaFilmes").style.display = "block" // aparece a pesquisa
+    document.querySelector("#PesquisaResenha").style.display = "block";
     voltar();
   }
   else {
@@ -70,7 +73,7 @@ function pegarToken() {
       },
     }).then(res => {
       ehAdm = true
-      postArea();
+      postModal();
       return res.json()
     })
     .then(data => {
@@ -146,20 +149,29 @@ function jaLogado() {
     document.querySelector(".botaoEntrar").style.display = "none"; // some o botão de entrar
     document.querySelector(".botaoAssine").style.display = "none"; // some o botão de assine
     document.querySelector(".seta").style.display = "none"; // some a seta
-    document.querySelector("#Pesquisa").style.display = "inline-block" // aparece a pesquisa
+    document.querySelector("#PesquisaFilmes").style.display = "block" // aparece a pesquisa
+    document.querySelector("#PesquisaResenha").style.display = "block" // aparece a pesquisa
   }
 }
 
 function deletarFilho() {
   var e = document.querySelector(".displayFilmes");
   var first = e.firstElementChild;
+  var f = document.querySelector(".displayPosts");
+  var second = f.firstElementChild;
   while (first) {
+      console.log("FILMEEEE");
       first.remove();
       first = e.firstElementChild;
   }
+  while (second) {
+    console.log("RESENHAAAA");
+    second.remove();
+    second = f.firstElementChild;
+  }
 }
 
-function pesquisar(){
+function pesquisarFilme(){
   deletarFilho();
   var requestOptions = {
     method: 'GET',
@@ -205,7 +217,7 @@ function toggleLoginRegister(){
   }
 }
 
-function postArea(){ //Habilita o modal de cadastro de post e exibe as postagens
+function postModal(){ //Habilita o modal de cadastro de publicacao
   if(ehAdm = true){
     document.querySelector("#botaoResenha").style.display = "block";
   }
@@ -214,10 +226,36 @@ function postArea(){ //Habilita o modal de cadastro de post e exibe as postagens
   }
 }
 
+// Pesquisar Resenha
+function pesquisarResenha(){
+  title = document.querySelector("#textoPesquisaResenha").value
+
+  deletarFilho();
+
+  fetch(urlAPI + `/post/${title}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(res => {
+    return res.json()
+  })
+  .then(data => {
+    for(i = 0; i < data.publicacao.length; i++){
+      console.log(data.publicacao[i].title)
+    }
+    msgErro = data.msg
+  })
+    .catch(error => console.log('ERROR'))
+}
 
 
-document.querySelector("#botaoPesquisa").addEventListener('click', () =>{
-  pesquisar();
+document.querySelector("#botaoPesquisaFilme").addEventListener('click', () =>{
+  pesquisarFilme();
+})
+
+document.querySelector("#botaoPesquisaResenha").addEventListener('click', () =>{
+  pesquisarResenha();
 })
 
 // esse é o botão de fazer o login efetivamente
@@ -235,10 +273,19 @@ document.querySelector(".botaoEntrar").addEventListener('click', () => {
 
 document.querySelector("#textoPesquisa").addEventListener('keydown', (event) =>{
   if(event.keyCode == 13){
-    pesquisar();
+    pesquisarFilme();
     }
 } )
 
 document.querySelector("#naoTemConta").addEventListener('click', () => {
   naoTemLogin();
 })
+
+
+
+// APAGAR DEPOIS
+
+function apagarToken(){
+  localStorage.clear();
+  document.location.reload(true);
+}

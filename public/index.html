@@ -5,18 +5,23 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="style.css" />
-  <link rel="shortcut icon" href="https://static-assets.bamgrid.com/product/starplus/favicons/favicon.e1b583d6771b7121f3b57326dfe078b6.ico" type="image/x-icon">
+  <link rel="shortcut icon"
+    href="https://static-assets.bamgrid.com/product/starplus/favicons/favicon.e1b583d6771b7121f3b57326dfe078b6.ico"
+    type="image/x-icon">
   <title>Saiba mais sobre o Star+</title>
 </head>
 
 <body onload="jaLogado()">
   <div class="wrapper">
-    <a href="#modalPost">
-      <button class="botoes" id="botaoResenha">Postar Resenha</button>
-    </a>
-    <div id="Pesquisa">
-      <input type="text" placeholder="Pesquisar" id="textoPesquisa">
-      <div id="botaoPesquisa">
+    <button onclick="apagarToken()">APAGAR TOKEN</button>
+    <div class="divBotao">
+      <a href="#modalPost">
+        <button class="botoes" id="botaoResenha">Postar Resenha</button>
+      </a>
+    </div>
+    <div class="Pesquisa" id="PesquisaFilmes">
+      <input type="text" placeholder="Pesquisar filme" class="input" id="textoPesquisa">
+      <div class="botaoPesquisa" id="botaoPesquisaFilme">
         <img src="searchicon.png" alt="Pesquisar">
       </div>
     </div>
@@ -27,10 +32,17 @@
     <h1>Séries, filmes e esportes que você adora.</h1>
     <button class="botaoAssine">ESCOLHA SEU PLANO</button>
     <button type="button" class="seta"><img src="seta.png"></button>
+
+    <div class="Pesquisa" id="PesquisaResenha">
+      <input type="text" placeholder="Pesquisar resenha" class="input" id="textoPesquisaResenha">
+      <div class="botaoPesquisa" id="botaoPesquisaResenha">
+        <img src="searchicon.png" alt="Pesquisar">
+      </div>
+    </div>
+
   </div>
   <div class="displayFilmes"></div>
-  <div class="postArea">
-  </div>
+  <div class="displayPosts"></div>
 </body>
 
 <div id="abrirLogin" class="modalAdd">
@@ -41,14 +53,13 @@
     </div>
     <form id="formulario" action="">
       <label for="nome">Usuário:</label>
-      <input class="entradas" type="text" id="cemail"
-        placeholder="Digite o email" autocomplete="off" />
+      <input class="entradas" type="text" id="cemail" value="admin@admin.com" placeholder="Digite o email"
+        autocomplete="off" />
       <label for="descricao">Senha:</label>
-      <input class="entradas" type="password" id="cpassword"
-        placeholder="Digite a senha" autocomplete="off" />
+      <input class="entradas" type="password" id="cpassword" value="adminadmin" placeholder="Digite a senha"
+        autocomplete="off" />
       <label for="descricao" id="labelconfirma">Confirme a senha:</label>
-      <input class="entradas" id="confirmasenha" type="password"
-        placeholder="Confirme a senha" autocomplete="off" />
+      <input class="entradas" id="confirmasenha" type="password" placeholder="Confirme a senha" autocomplete="off" />
       <div class="botoes" id="botaoLogin">
         <p>ENTRAR</p>
       </div>
@@ -68,14 +79,12 @@
     </div>
     <form id="formularioPost" action="">
       <label for="title">Título:</label>
-      <input class="entradas" type="text" id="ctitulo"
-        placeholder="Digite o título do filme" autocomplete="off" />
+      <input class="entradas" type="text" id="ctitulo" placeholder="Digite o título do filme" autocomplete="off" />
       <label for="year">Ano:</label>
-      <input class="entradas" type="number" id="cano"
-        placeholder="Digite o ano do filme" autocomplete="off" />
+      <input class="entradas" type="number" id="cano" placeholder="Digite o ano do filme" autocomplete="off" />
       <label for="descricao">Nota:</label>
       <input class="entradas" id="crating" type="number" max="10" min="0" maxlength="1"
-        placeholder="Use os botões para selecionar a nota" autocomplete="off" />      
+        placeholder="Use os botões para selecionar a nota" autocomplete="off" />
       <textarea class="entradas" id="cresenha" rows="4" cols="50" placeholder="Faça a resenha do filme"></textarea>
       <div class="botoes">
         <p>PUBLICAR</p>
