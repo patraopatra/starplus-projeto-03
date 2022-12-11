@@ -22,6 +22,11 @@ body {
   position: absolute;
 }
 
+.postArea{
+  margin: 0 auto;
+  position: relative;
+}
+
 @font-face {
   font-family: Avenir;
   src: url("AvenirLTStd-Roman.otf");
@@ -126,7 +131,7 @@ body {
   line-height: 18px;
 }
 
-.Login {
+.botoes {
   font-family: Avenir, sans-serif;
   background: #6421ff;
   text-shadow: 1px 1px 1px #323232;
@@ -149,7 +154,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.Login:active {
+.botoes:active {
   transform: translateY(4px);
   box-shadow: 0 5px rgb(240, 240, 240);
 }
@@ -227,7 +232,7 @@ h1 {
   pointer-events: auto;
 }
 
-#telaLogin {
+.telaModal {
   width: 300px;
   height: auto;
   position: relative;
@@ -264,7 +269,7 @@ h1 {
   -webkit-tap-highlight-color: transparent;
 }
 
-.entradaLogin {
+.entradas {
   font-family: Avenir, sans-serif;
   display: block;
   width: 90%;
@@ -281,6 +286,7 @@ h1 {
   display: none;
   color: red;
 }
+
 
 #Pesquisa {
   display: none;
@@ -383,4 +389,10 @@ span{
   display: block;
   text-align: center;
   color: #6421ff;
+}
+
+#labelCriacao{
+  text-align: center;
+  font-weight: bolder;
+  font-size: 25px;
 }

@@ -5,7 +5,7 @@ const Publicacao = mongoose.model('Publicacao', {
   title: String,
   year: Number,
   rating: Number,
-  text: String,
+  resenha: String,
 })
 
 module.exports = Publicacao

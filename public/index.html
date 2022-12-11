@@ -10,8 +10,10 @@
 </head>
 
 <body onload="jaLogado()">
-  <div>CARNEEEE</div>
   <div class="wrapper">
+    <a href="#modalPost">
+      <button class="botoes" id="botaoResenha">Postar Resenha</button>
+    </a>
     <div id="Pesquisa">
       <input type="text" placeholder="Pesquisar" id="textoPesquisa">
       <div id="botaoPesquisa">
@@ -27,31 +29,57 @@
     <button type="button" class="seta"><img src="seta.png"></button>
   </div>
   <div class="displayFilmes"></div>
+  <div class="postArea">
+  </div>
 </body>
 
 <div id="abrirLogin" class="modalAdd">
-  <div id="telaLogin">
+  <div class="telaModal">
     <a href="#fechar" title="Fechar" class="fechar">X</a>
     <div>
       <p id="naoTemConta">Não tem um conta? Registre-se</p>
     </div>
     <form id="formulario" action="">
       <label for="nome">Usuário:</label>
-      <input class="entradaLogin" type="text" id="cemail"
+      <input class="entradas" type="text" id="cemail"
         placeholder="Digite o email" autocomplete="off" />
       <label for="descricao">Senha:</label>
-      <input class="entradaLogin" type="password" id="cpassword"
+      <input class="entradas" type="password" id="cpassword"
         placeholder="Digite a senha" autocomplete="off" />
       <label for="descricao" id="labelconfirma">Confirme a senha:</label>
-      <input class="entradaLogin" id="confirmasenha" type="password"
+      <input class="entradas" id="confirmasenha" type="password"
         placeholder="Confirme a senha" autocomplete="off" />
-      <div class="Login">
+      <div class="botoes" id="botaoLogin">
         <p>ENTRAR</p>
       </div>
       <div class="erro" id="erroEscrita">
         <p>O usuário e senha devem possuir pelo menos 3 caracteres.</p>
       </div>
       <div class="erro" id="erroValidacao"></div>
+    </form>
+  </div>
+</div>
+
+<div id="modalPost" class="modalAdd">
+  <div class="telaModal">
+    <a href="#fechar" title="Fechar" class="fechar">X</a>
+    <div>
+      <p id="labelCriacao">Criação de postagem</p>
+    </div>
+    <form id="formularioPost" action="">
+      <label for="title">Título:</label>
+      <input class="entradas" type="text" id="ctitulo"
+        placeholder="Digite o título do filme" autocomplete="off" />
+      <label for="year">Ano:</label>
+      <input class="entradas" type="number" id="cano"
+        placeholder="Digite o ano do filme" autocomplete="off" />
+      <label for="descricao">Nota:</label>
+      <input class="entradas" id="crating" type="number" max="10" min="0" maxlength="1"
+        placeholder="Use os botões para selecionar a nota" autocomplete="off" />      
+      <textarea class="entradas" id="cresenha" rows="4" cols="50" placeholder="Faça a resenha do filme"></textarea>
+      <div class="botoes">
+        <p>PUBLICAR</p>
+      </div>
     </form>
   </div>
 </div>

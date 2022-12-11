@@ -17,7 +17,7 @@ mongoose.set('strictQuery', true); // contornar aviso no terminal
 
 // models
 const User = require("./model/User");
-//const Publicacao = require("./model/Publicacao");
+const Publicacao = require("./model/Publicacao");
 
 // Configurar resposta JSON
 app.use(express.json());
@@ -143,6 +143,54 @@ app.post("/auth/login", async (req, res) => {
   }
   
 });
+
+//  POST de reviews
+
+// Registrar usuário
+app.post("/post/register", async (req, res) => {
+  const { title, year, rating, resenha } = req.body;
+
+  // validações
+  if (!title) {
+    return res.status(422).json({ msg: "O título é obrigatório" });
+  }
+
+  if (!rating) {
+    return res.status(422).json({ msg: "A nota é obrigatória" });
+  }
+
+  if (!resenha) {
+    return res.status(422).json({ msg: "A resenha é obrigatória" });
+  }
+  // criar publicacao
+  const publicacao = new Publicacao({
+    title, year, rating, resenha,
+  });
+
+  try {
+    await publicacao.save();
+    let id = publicacao._id   // PEGAR O ID E USAR NO GET DEPOIS
+    res.status(201).json({ msg: "Post criado com sucesso", id});
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+});
+
+
+// Rota pegar post
+app.get("/post/:title", async (req, res) => {
+  const titleq = req.params.title;
+
+  // checa se user existe
+  const publicacao = await Publicacao.find({title: titleq});
+
+  if (!publicacao) {
+    return res.status(404).json({ msg: "Publicação não existe" });
+  }
+
+  res.status(200).json({ publicacao });
+});
+
 
 // Dados do usuário
 const dbUser = process.env.DB_USER;

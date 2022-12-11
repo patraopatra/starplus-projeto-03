@@ -11,6 +11,7 @@ let emailAdm = 'admin@admin.com';
 
 document.querySelector("#confirmasenha").style.display = "none";
 document.querySelector("#labelconfirma").style.display = "none";
+document.querySelector("#botaoResenha").style.display = "none";
 
 function voltar() {
   window.history.back();
@@ -51,8 +52,7 @@ function pegarToken() {
         localStorage.setItem("token", data.token);
 
         if (localStorage.getItem("token") != "undefined") {
-          //validou = true;
-          validou = false;
+          validou = true;
         }
 
         msgErro = data.msg
@@ -70,6 +70,7 @@ function pegarToken() {
       },
     }).then(res => {
       ehAdm = true
+      postArea();
       return res.json()
     })
     .then(data => {
@@ -185,7 +186,7 @@ function naoTemLogin(){
 }
 
 function toggleLoginRegister(){
-  var a1 = document.querySelector('.Login')
+  var a1 = document.querySelector('#botaoLogin')
   var a2 = document.querySelector('#naoTemConta')
   if(temconta == false){
     a1.innerHTML = '<p>REGISTRAR</p>'
@@ -204,13 +205,23 @@ function toggleLoginRegister(){
   }
 }
 
+function postArea(){ //Habilita o modal de cadastro de post e exibe as postagens
+  if(ehAdm = true){
+    document.querySelector("#botaoResenha").style.display = "block";
+  }
+  else{
+    document.querySelector("#botaoResenha").style.display = "none";
+  }
+}
+
+
 
 document.querySelector("#botaoPesquisa").addEventListener('click', () =>{
   pesquisar();
 })
 
 // esse é o botão de fazer o login efetivamente
-document.querySelector(".Login").addEventListener('click', () => {
+document.querySelector("#botaoLogin").addEventListener('click', () => {
   validar();
 })
 
