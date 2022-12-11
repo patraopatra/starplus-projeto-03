@@ -159,6 +159,20 @@ body {
   box-shadow: 0 5px rgb(240, 240, 240);
 }
 
+#botaoResenha {
+  box-shadow: 0 0 10px 0 rgb(64, 64, 64);
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bolder;
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+#botaoResenha:active {
+  transform: translateY(4px);
+  box-shadow: 0 5px rgba(58, 31, 121, 0.7);
+}
 
 .divBotao {
   width: 20%;
@@ -339,7 +353,22 @@ h1 {
   display: inline-block;
 }
 
+.containerPost{
+  display: inline-block;
+}
+
 .caixaFilme {
+  font-family: Avenir, sans-serif;
+  align-content: center;
+  justify-content: center;
+  width: 160px;
+  height: auto;
+  background-color: #4e4a59;
+  border-radius: 5px;
+  margin: 20px;    
+}
+
+.caixaPostagem {
   font-family: Avenir, sans-serif;
   align-content: center;
   justify-content: center;
@@ -359,6 +388,49 @@ h1 {
 }
 
 #Titulo {
+  color: #FFFFFF;
+  margin-top: 5px;
+  width: auto;
+  height: auto;
+  position:relative;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.titulo {
+  color: #FFFFFF;
+  margin-top: 5px;
+  width: auto;
+  height: auto;
+  position:relative;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resenha {
+  color: #FFFFFF;
+  margin-top: 5px;
+  width: auto;
+  height: auto;
+  position:relative;
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 10px;
+}
+
+.nota {
   color: #FFFFFF;
   margin-top: 5px;
   width: auto;

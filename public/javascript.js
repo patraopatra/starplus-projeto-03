@@ -1,13 +1,14 @@
 var deixaLogar = new Boolean(false);
 var validou = new Boolean(false);
+var ehAdmGlobal = new Boolean(false);
 let resposta;
 var API_KEY = "k_ixjet3x4"; // API IMDB - 1000 acessos   k_wcarsm20
 var API_URL = 'https://imdb-api.com/API/SearchTitle/' + API_KEY + '/';
 var temconta = new Boolean(true);
 var urlAPI = 'http://localhost:3000';
 let msgErro;
+let msgErroResenha;
 let idAdm = '63948344b0a0ede1d0d73a29';
-let emailAdm = 'admin@admin.com';
 
 document.querySelector("#confirmasenha").style.display = "none";
 document.querySelector("#labelconfirma").style.display = "none";
@@ -36,6 +37,12 @@ function erroValidacao() {
   }
 }
 
+function erroResenha() {
+  erro = document.querySelector("#erroValidacaoResenha");
+  erro.style.display = "block";
+  erro.innerHTML = `<p>${msgErroResenha}</p>`
+}
+
 function pegarToken() {
   if (deixaLogar == true) {
     // Login
@@ -54,61 +61,66 @@ function pegarToken() {
       .then(data => {
         localStorage.setItem("token", data.token);
 
+        if(data.id == idAdm){
+          ehAdm = true
+          postModal();
+        }
+        else{
+          ehAdm = false
+        }
+
         if (localStorage.getItem("token") != "undefined") {
           validou = true;
         }
-
         msgErro = data.msg
       })
-      .catch(error => console.log('ERROR'))
-  }
-
-  //verificar se é adm
-  if (document.querySelector('#cemail').value == emailAdm) {
-    fetch(urlAPI + `/user/${idAdm}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("token")}`
-      },
-    }).then(res => {
-      ehAdm = true
+      .catch(error => console.log('ERROR')) 
+/*
+      //verificar se é adm
+  fetch(urlAPI + `/user/${idAdm}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("token")}`
+    },
+  }).then(res => {
+      ehAdm = true;
       postModal();
       return res.json()
-    })
+  })
     .then(data => {
-            ehAdm = false
-            msgErro = data.msg
+      ehAdm = false
+      msgErro = data.msg
     })
-      .catch(error => console.log('ERROR'))
+    .catch(error => console.log('ERROR')) */
   }
 }
 
 function criarLogin() {
-    fetch(urlAPI + '/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: document.querySelector('#cemail').value,
-        password: document.querySelector('#cpassword').value,
-        confirmpassword: document.querySelector('#confirmasenha').value
-      })
-    }).then(res => {
-      return res.json()
+  fetch(urlAPI + '/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: document.querySelector('#cemail').value,
+      password: document.querySelector('#cpassword').value,
+      confirmpassword: document.querySelector('#confirmasenha').value
     })
+  }).then(res => {
+    return res.json()
+  })
     .then(data => {
       msgErro = data.msg
       console.log(msgErro)
     })
-      .catch(error => console.log('ERROR'))
+    .catch(error => console.log('ERROR'))
 }
 
 function erroEscrita() {   // FAZER comparar senhas, respostas dos erros FRONT-END, tirar TODOS os console.log
   if (document.querySelector("#cemail").value.length < 3 ||
-      document.querySelector("#cpassword").value.length < 3 ||
-      document.querySelector("#cpassword").value.length < 3) {
+    document.querySelector("#cpassword").value.length < 3 ||
+    document.querySelector("#cpassword").value.length < 3) {
     document.querySelector("#erroEscrita").style.display = "block";
     deixaLogar = false;
   }
@@ -117,6 +129,7 @@ function erroEscrita() {   // FAZER comparar senhas, respostas dos erros FRONT-E
     deixaLogar = true;
   }
 }
+
 
 function validarLogin() {
   erroEscrita();
@@ -130,11 +143,11 @@ function validarRegistro() {
   setTimeout(erroValidacao, 500); // executar em 500ms
 }
 
-function validar(){
-  if(temconta == true){
+function validar() {
+  if (temconta == true) {
     validarLogin();
   }
-  else{
+  else {
     validarRegistro();
   }
 }
@@ -160,9 +173,9 @@ function deletarFilho() {
   var f = document.querySelector(".displayPosts");
   var second = f.firstElementChild;
   while (first) {
-      console.log("FILMEEEE");
-      first.remove();
-      first = e.firstElementChild;
+    console.log("FILMEEEE");
+    first.remove();
+    first = e.firstElementChild;
   }
   while (second) {
     console.log("RESENHAAAA");
@@ -171,7 +184,7 @@ function deletarFilho() {
   }
 }
 
-function pesquisarFilme(){
+function pesquisarFilme() {
   deletarFilho();
   var requestOptions = {
     method: 'GET',
@@ -192,22 +205,22 @@ function pesquisarFilme(){
     .catch(error => console.log('error', error));
 }
 
-function naoTemLogin(){
+function naoTemLogin() {
   temconta = !temconta
   toggleLoginRegister()
 }
 
-function toggleLoginRegister(){
+function toggleLoginRegister() {
   var a1 = document.querySelector('#botaoLogin')
   var a2 = document.querySelector('#naoTemConta')
-  if(temconta == false){
+  if (temconta == false) {
     a1.innerHTML = '<p>REGISTRAR</p>'
     a2.innerHTML = '<p id="naoTemConta">Já tem uma conta? Faça login</p>'
     document.querySelector("#confirmasenha").style.display = "block";
     document.querySelector("#labelconfirma").style.display = "block";
     //chama o método de criar conta
   }
-  if(temconta == true){
+  if (temconta == true) {
     a1.innerHTML = '<p>ENTRAR</p>'
     a2.innerHTML = '<p id="naoTemConta">Não tem um conta? Registre-se</p>'
     document.querySelector("#confirmasenha").style.display = "none";
@@ -217,17 +230,17 @@ function toggleLoginRegister(){
   }
 }
 
-function postModal(){ //Habilita o modal de cadastro de publicacao
-  if(ehAdm = true){
+function postModal() { //Habilita o modal de cadastro de publicacao
+  if (ehAdm === true) {
     document.querySelector("#botaoResenha").style.display = "block";
   }
-  else{
+  else {
     document.querySelector("#botaoResenha").style.display = "none";
   }
 }
 
 // Pesquisar Resenha
-function pesquisarResenha(){
+function pesquisarResenha() {
   title = document.querySelector("#textoPesquisaResenha").value
 
   deletarFilho();
@@ -240,21 +253,55 @@ function pesquisarResenha(){
   }).then(res => {
     return res.json()
   })
-  .then(data => {
-    for(i = 0; i < data.publicacao.length; i++){
-      console.log(data.publicacao[i].title)
-    }
-    msgErro = data.msg
+    .then(data => {
+      gerarPostagem(data);
+      msgErro = data.msg
+    })
+    .catch(error => console.log('ERROR'))
+}
+
+function criarPostagem() {
+  fetch(urlAPI + '/post/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: document.querySelector('#ctitulo').value,
+      year: document.querySelector('#cano').value,
+      rating: document.querySelector('#cnota').value,
+      resenha: document.querySelector('#cresenha').value
+    })
+  }).then(res => {
+    return res.json()
   })
+    .then(data => {
+      msgErroResenha = data.msg
+      console.log(msgErroResenha)
+      erroResenha()
+    })
     .catch(error => console.log('ERROR'))
 }
 
 
-document.querySelector("#botaoPesquisaFilme").addEventListener('click', () =>{
+function gerarPostagem(data) {
+  for (var i = 0; i < data.publicacao.length; i++) {
+    var obj = data.publicacao[i]
+    if (data.publicacao[i].year == null) {
+      data.publicacao[i].year = "N/A"
+    }
+    var a1 = document.createElement("div")
+    a1.className = "containerPost"
+    a1.innerHTML = `<div class="caixaPostagem"><p class="titulo">${data.publicacao[i].title} (${data.publicacao[i].year})</p><p class="nota">Nota: ${data.publicacao[i].rating}</p><p class="resenha">${data.publicacao[i].resenha}</p></div>`
+    document.querySelector(".displayPosts").appendChild(a1)
+  }
+}
+
+document.querySelector("#botaoPesquisaFilme").addEventListener('click', () => {
   pesquisarFilme();
 })
 
-document.querySelector("#botaoPesquisaResenha").addEventListener('click', () =>{
+document.querySelector("#botaoPesquisaResenha").addEventListener('click', () => {
   pesquisarResenha();
 })
 
@@ -263,7 +310,7 @@ document.querySelector("#botaoLogin").addEventListener('click', () => {
   validar();
 })
 
-document.querySelector(".fechar").addEventListener('click',() => {
+document.querySelector(".fechar").addEventListener('click', () => {
   voltar();
 })
 
@@ -271,21 +318,25 @@ document.querySelector(".botaoEntrar").addEventListener('click', () => {
   jaLogado();
 })
 
-document.querySelector("#textoPesquisa").addEventListener('keydown', (event) =>{
-  if(event.keyCode == 13){
+document.querySelector("#textoPesquisa").addEventListener('keydown', (event) => {
+  if (event.keyCode == 13) {
     pesquisarFilme();
-    }
-} )
+  }
+})
 
 document.querySelector("#naoTemConta").addEventListener('click', () => {
   naoTemLogin();
+})
+
+document.querySelector("#botaoPublicar").addEventListener('click', () => {
+  criarPostagem();
 })
 
 
 
 // APAGAR DEPOIS
 
-function apagarToken(){
+function apagarToken() {
   localStorage.clear();
   document.location.reload(true);
 }

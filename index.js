@@ -126,7 +126,7 @@ app.post("/auth/login", async (req, res) => {
   if (password != user.password) {
     return res.status(422).json({ msg: "Senha inválida" });
   }
-
+  id = user._id
   try {
     const secret = process.env.SECRET;
 
@@ -137,7 +137,7 @@ app.post("/auth/login", async (req, res) => {
       secret,
     );
 
-    res.status(200).json({ msg: "Autenticação realizada com sucesso", token });
+    res.status(200).json({ msg: "Autenticação realizada com sucesso", token, id });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
@@ -146,7 +146,7 @@ app.post("/auth/login", async (req, res) => {
 
 //  POST de reviews
 
-// Registrar usuário
+// Registrar post
 app.post("/post/register", async (req, res) => {
   const { title, year, rating, resenha } = req.body;
 
@@ -169,8 +169,7 @@ app.post("/post/register", async (req, res) => {
 
   try {
     await publicacao.save();
-    let id = publicacao._id   // PEGAR O ID E USAR NO GET DEPOIS
-    res.status(201).json({ msg: "Post criado com sucesso", id});
+    res.status(201).json({ msg: "Post criado com sucesso"});
   } catch (error) {
     res.status(500).json({ msg: error });
   }
