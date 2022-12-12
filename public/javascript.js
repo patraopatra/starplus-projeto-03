@@ -259,6 +259,26 @@ function pesquisarResenha() {
     })
     .catch(error => console.log('ERROR'))
 }
+/*
+const form = document.getElementById("form");
+form.addEventListener("submit", submitForm);
+
+function criarFoto(e) {
+    e.preventDefault();
+    const files = document.getElementById("foto");
+    const formData = new FormData();
+    formData.append("foto", files.files);
+    fetch(API_URL + "/upload", {
+        method: 'POST',
+        body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+    })
+        .then((res) => console.log(res))
+        .catch((err) => ("Error occured", err));
+}
+*/
 
 function criarPostagem() {
   fetch(urlAPI + '/post/register', {
@@ -331,7 +351,6 @@ document.querySelector("#naoTemConta").addEventListener('click', () => {
 document.querySelector("#botaoPublicar").addEventListener('click', () => {
   criarPostagem();
 })
-
 
 
 // APAGAR DEPOIS

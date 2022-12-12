@@ -1,19 +1,28 @@
 let dotenv = require("dotenv").config();
 let express = require("express");
 let mongoose = require("mongoose");
-let bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 let http = require('http');
 let path = require('path');
+var session = require('express-session')
+let multer = require('multer');
+let upload = multer({ dest: 'uploads/' });
+var imgModel = require('../model/Image');
+var bodyParser = require('body-parser')
+
+
+const secret = process.env.SECRET;
 
 let app = express();
 
 app.set('views', path.join(__dirname, '../view'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.urlencoded({extended: false}));
-
+//app.use(express.urlencoded({extended: false}));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 mongoose.set('strictQuery', true); // contornar aviso no terminal
+
+app.use(express.urlencoded({ extended: true }));
 
 // models
 const User = require("../model/User");
@@ -23,8 +32,12 @@ const Publicacao = require("../model/Publicacao");
 app.use(express.json());
 mongoose.set('strictQuery', true);
 
-// Rota aberta
 app.get("/", (req, res) => {
+  if(!req.session.views){
+    req.session.views = 0;  
+  }
+  const views = req.session.views++;
+  res.cookie('view', views, {maxAge: 3000})
   res.status(200)
   res.render('index')
 });
@@ -99,6 +112,28 @@ app.post("/auth/register", async (req, res) => {
   }
 });
 
+// FAZER UPLOAD DA IMAGEM LOCAL E BANCO
+app.post('/images', upload.single('img'), (req, res, next) => {
+    
+  var obj = {
+      name: req.body.name,
+      desc: req.body.desc,
+      img: {
+          data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+          contentType: 'image/png'
+      }
+  }
+  imgModel.create(obj, (err, item) => {
+      if (err) {
+          console.log(err);
+      }
+      else {
+          item.save();
+      }
+  });
+});
+
+
 
 // Login
 app.post("/auth/login", async (req, res) => {
@@ -148,6 +183,7 @@ app.post("/auth/login", async (req, res) => {
 
 // Registrar post
 app.post("/post/register", async (req, res) => {
+  
   const { title, year, rating, resenha } = req.body;
 
   // validações
@@ -164,11 +200,18 @@ app.post("/post/register", async (req, res) => {
   }
   // criar publicacao
   const publicacao = new Publicacao({
-    title, year, rating, resenha,
+    title, year, rating, resenha, 
   });
 
   try {
     await publicacao.save();
+
+    if(!req.session.post){
+      req.session.post = 1;  
+    }
+    const posts = req.session.post++;
+    res.cookie('qtdPosts', `${posts}`)
+
     res.status(201).json({ msg: "Post criado com sucesso"});
   } catch (error) {
     res.status(500).json({ msg: error });
@@ -189,7 +232,6 @@ app.get("/post/:title", async (req, res) => {
 
   res.status(200).json({ publicacao });
 });
-
 
 // Dados do usuário
 const dbUser = process.env.DB_USER;
