@@ -5,10 +5,11 @@ let resposta;
 var API_KEY = "k_ixjet3x4"; // API IMDB - 1000 acessos   k_wcarsm20
 var API_URL = 'https://imdb-api.com/API/SearchTitle/' + API_KEY + '/';
 var temconta = new Boolean(true);
-var urlAPI = 'http://localhost:3000';
+var urlAPI = 'https://proj3web2.fly.dev';
 let msgErro;
 let msgErroResenha;
 let idAdm = '63948344b0a0ede1d0d73a29';
+
 
 document.querySelector("#confirmasenha").style.display = "none";
 document.querySelector("#labelconfirma").style.display = "none";
@@ -75,24 +76,6 @@ function pegarToken() {
         msgErro = data.msg
       })
       .catch(error => console.log('ERROR')) 
-/*
-      //verificar se é adm
-  fetch(urlAPI + `/user/${idAdm}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem("token")}`
-    },
-  }).then(res => {
-      ehAdm = true;
-      postModal();
-      return res.json()
-  })
-    .then(data => {
-      ehAdm = false
-      msgErro = data.msg
-    })
-    .catch(error => console.log('ERROR')) */
   }
 }
 
@@ -112,7 +95,6 @@ function criarLogin() {
   })
     .then(data => {
       msgErro = data.msg
-      console.log(msgErro)
     })
     .catch(error => console.log('ERROR'))
 }
@@ -173,12 +155,10 @@ function deletarFilho() {
   var f = document.querySelector(".displayPosts");
   var second = f.firstElementChild;
   while (first) {
-    console.log("FILMEEEE");
     first.remove();
     first = e.firstElementChild;
   }
   while (second) {
-    console.log("RESENHAAAA");
     second.remove();
     second = f.firstElementChild;
   }
@@ -259,26 +239,6 @@ function pesquisarResenha() {
     })
     .catch(error => console.log('ERROR'))
 }
-/*
-const form = document.getElementById("form");
-form.addEventListener("submit", submitForm);
-
-function criarFoto(e) {
-    e.preventDefault();
-    const files = document.getElementById("foto");
-    const formData = new FormData();
-    formData.append("foto", files.files);
-    fetch(API_URL + "/upload", {
-        method: 'POST',
-        body: formData,
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-    })
-        .then((res) => console.log(res))
-        .catch((err) => ("Error occured", err));
-}
-*/
 
 function criarPostagem() {
   fetch(urlAPI + '/post/register', {
@@ -297,7 +257,6 @@ function criarPostagem() {
   })
     .then(data => {
       msgErroResenha = data.msg
-      console.log(msgErroResenha)
       erroResenha()
     })
     .catch(error => console.log('ERROR'))
@@ -351,11 +310,3 @@ document.querySelector("#naoTemConta").addEventListener('click', () => {
 document.querySelector("#botaoPublicar").addEventListener('click', () => {
   criarPostagem();
 })
-
-
-// APAGAR DEPOIS
-
-function apagarToken() {
-  localStorage.clear();
-  document.location.reload(true);
-}

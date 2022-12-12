@@ -5,24 +5,27 @@ let jwt = require("jsonwebtoken");
 let http = require('http');
 let path = require('path');
 var session = require('express-session')
-let multer = require('multer');
-let upload = multer({ dest: 'uploads/' });
-var imgModel = require('../model/Image');
-var bodyParser = require('body-parser')
-
+let cors = require('cors');
+const PORT = process.env.PORT || "8080";
 
 const secret = process.env.SECRET;
 
 let app = express();
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE")
+  app.use(cors());
+  next();
+});
+
 app.set('views', path.join(__dirname, '../view'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, '../public')));
-//app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 mongoose.set('strictQuery', true); // contornar aviso no terminal
 
-app.use(express.urlencoded({ extended: true }));
 
 // models
 const User = require("../model/User");
@@ -110,27 +113,6 @@ app.post("/auth/register", async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: error });
   }
-});
-
-// FAZER UPLOAD DA IMAGEM LOCAL E BANCO
-app.post('/images', upload.single('img'), (req, res, next) => {
-    
-  var obj = {
-      name: req.body.name,
-      desc: req.body.desc,
-      img: {
-          data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-          contentType: 'image/png'
-      }
-  }
-  imgModel.create(obj, (err, item) => {
-      if (err) {
-          console.log(err);
-      }
-      else {
-          item.save();
-      }
-  });
 });
 
 
@@ -242,14 +224,6 @@ mongoose.connect(
   )
   .then(() => {
     console.log("Conectou ao banco!");
-    app.listen(3000);
+    app.listen(PORT);
   })
   .catch((err) => console.log(err));
-
-/*Gerar um token e criptografar
-  Criar um admin no banco com o token criptografado
-  Criar uma função (ex: ehAdmin()) com esse token setado fixamente na função
-  Na função, puxa o email e compara com o do admin
-  Se igual, realiza a comparação dos tokens como serão iguais, permite o acesso de admin 
-*/
-
